@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Title from "./components/Title";
+import Item from "./components/Item";
+import { Component } from "react";
+import Add from "./components/Add";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: ["appel", "banana", "tomato", "watermelon", "moshe"],
+      
+    };
+  }
+
+  AddNewVegetable(newItem){
+    this.state.list.push(newItem);
+    this.setState({ list: this.state.list });
+  }
+
+  render() {
+    const items = [];
+
+    for (let i = 0; i < this.state.list.length; i++) {
+      items.push(<Item name={this.state.list[i]} />);
+    }
+
+    return (
+      <div className="App">
+        <Title />
+        {items}
+        <Add onAdd={(newItem)=>this.AddNewVegetable(newItem)}  type="vegetable"/>
+        <Add onAdd={(newItem)=>this.AddNewVegetable(newItem)}  type="spice"/>
+        <Add onAdd={(newItem)=>this.AddNewVegetable(newItem)}  type="cans"/>
+      </div>
+    );
+  }
 }
 
 export default App;
